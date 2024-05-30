@@ -1,0 +1,71 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 1200px;
+  padding: 10px;
+  gap: 20px;
+  max-width: 100%;
+}
+
+#actionables {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  min-height: 30px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+#actionables label,
+input {
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid;
+}
+
+#actionables label {
+  text-align: center;
+  width: 120px;
+  background-color: white;
+  flex-shrink: 1;
+}
+
+#actionables label:hover {
+  cursor: pointer;
+}
+
+#actionables input[type="file"] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+#cards-holder {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  overflow-y: auto;
+  width: 100%;
+  min-height: 700px;
+  max-width: 100%;
+  max-height: 100%;
+  gap: 20px;
+}
+
+.info-card {
+  height: 200px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+@media (max-width: 320px) {
+  #cards-holder {
+    grid-template-columns: 1fr;
+  }
+}
