@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "NodeNext",
+    "rootDir": "./",
+    "outDir": "./dist",
+    "strict": true
+  }
+}
