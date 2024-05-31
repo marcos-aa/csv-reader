@@ -83,6 +83,7 @@ function App() {
           value={search}
           placeholder="Search"
           onChange={handleSearch}
+          data-testid="search-input"
         />
 
         <UploadLabel

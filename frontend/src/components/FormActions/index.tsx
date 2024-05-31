@@ -1,7 +1,7 @@
 import { faUpload, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormEvent } from "react";
-import "./styles.module.css";
+import "./styles.css";
 
 interface ActionProps {
   handleFileSubmit(e: FormEvent<HTMLFormElement>): void;

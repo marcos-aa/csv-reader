@@ -1,6 +1,6 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./styles.module.css";
+import "./styles.css";
 
 interface ErrorProps {
   message: string;
@@ -10,8 +10,12 @@ export default function ErrorPopup({ message, close }: ErrorProps) {
   return (
     <div id="error">
       <p>{message}</p>
-      <button type="button" title="Remove error warning">
-        <FontAwesomeIcon icon={faXmark} onClick={close} />
+      <button type="button" title="Close error popup" data-testid="error-popup">
+        <FontAwesomeIcon
+          icon={faXmark}
+          onClick={close}
+          data-testid="close-error"
+        />
       </button>
     </div>
   );

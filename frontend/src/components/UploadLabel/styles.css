@@ -17,7 +17,7 @@ button {
   cursor: pointer;
 }
 
-.upload-label input[type="file"] {
+.upload-label #file-input {
   width: 0;
   height: 0;
   opacity: 0;

@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import "./styles.module.css";
+import "./styles.css";
 
 interface UploadLabel {
   filename?: string;
@@ -10,8 +10,10 @@ export default function UploadLabel({
   filename,
 }: UploadLabel) {
   return (
-    <label className="upload-label">
+    <label htmlFor="file-input" className="upload-label">
       <input
+        name="file-input"
+        id="file-input"
         key={filename}
         type="file"
         accept="text/csv"

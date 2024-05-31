@@ -5,7 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CSVRow } from "@shared/types";
-import "./styles.module.css";
+import "./styles.css";
 
 export default function InfoCard({
   name,
