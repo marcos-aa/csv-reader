@@ -23,11 +23,13 @@ function App() {
   const [error, setError] = useState<string>("");
 
   const handleFileChange = (e: FormEvent<HTMLInputElement>) => {
-    const newfile = e.currentTarget.files?.item(0);
-    setFile(() => newfile ?? null);
+    const newfile = e.currentTarget.files?.item(0) as File;
+    setFile(newfile);
   };
 
-  const handleFileRemoval = () => setFile(null);
+  const handleFileRemoval = () => {
+    setFile(null);
+  };
 
   const handleFileSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,13 +81,18 @@ function App() {
           onChange={handleSearch}
         />
         <label className="upload-label">
-          <input type="file" accept="text/csv" onChange={handleFileChange} />
+          <input
+            key={file?.name}
+            type="file"
+            accept="text/csv"
+            onChange={handleFileChange}
+          />
           Upload
         </label>
 
         <form
           id="file-actions"
-          className={file ? "shared-wd" : "full-wd"}
+          className={file ? "shared-wd" : ""}
           onSubmit={handleFileSubmit}
         >
           <button
