@@ -4,6 +4,10 @@
     "module": "NodeNext",
     "rootDir": "./",
     "outDir": "./dist",
-    "strict": true
-  }
+    "strict": true,
+    "paths": {
+      "@shared/types": ["../shared"]
+    }
+  },
+  "references": [{ "path": "../shared/tsconfig.json" }]
 }

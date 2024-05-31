@@ -6,9 +6,15 @@ import {
 import { faHome } from "@fortawesome/free-solid-svg-icons/faHome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FormEvent, useState } from "react";
+import { CSVRow } from "@shared/types";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+
 import "./App.css";
+
+const baseURL = "http://localhost:3000";
 function App() {
+  const [, setUsers] = useState<CSVRow[]>([]);
+  const [search, setSearch] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
 
   const handleFileChange = (e: FormEvent<HTMLInputElement>) => {
@@ -24,16 +30,43 @@ function App() {
 
     const formData = new FormData();
     formData.append("file", file);
-    await fetch("http://localhost:3000/api/files", {
+    await fetch(baseURL + "/api/files", {
       method: "POST",
       body: formData,
       mode: "no-cors",
     });
   };
+
+  const handleSearch = async (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  const getUsers = async (search: string) => {
+    const res = await fetch(`${baseURL}/api/users?q=${search}`);
+    const data: CSVRow[] = (await res.json()).data;
+    setUsers(data);
+  };
+
+  useEffect(() => {
+    if (search.length < 1) return;
+
+    const timeoutID = setTimeout(() => {
+      getUsers(search);
+    }, 400);
+
+    return () => clearTimeout(timeoutID);
+  }, [search]);
+
   return (
     <main>
       <div id="actionables">
-        <input name="search" type="text" value={""} placeholder="Search" />
+        <input
+          name="search"
+          type="text"
+          value={search}
+          placeholder="Search"
+          onChange={handleSearch}
+        />
         <label className="upload-label">
           <input type="file" accept="text/csv" onChange={handleFileChange} />
           Upload

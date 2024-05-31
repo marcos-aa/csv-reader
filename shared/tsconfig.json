@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "rootDir": "./",
+    "composite": true,
+    "outDir": "lib",
+    "declarationMap": true
+  }
+}
