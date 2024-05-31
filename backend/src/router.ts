@@ -1,8 +1,20 @@
-import { Router } from "express";
+import { Request, Router } from "express";
+import multer from "multer";
+import path from "path";
+import FileController from "./controllers/FileController";
+
+const upload = multer({
+  dest: "./uploads",
+  fileFilter: (req: Request, file, cb) => {
+    if (path.extname(file.originalname).toLowerCase() === ".csv")
+      cb(null, true);
+    else cb(null, false);
+  },
+});
 
 const router = Router();
 
-router.post("/api/files");
+router.post("/api/files", upload.single("file"), new FileController().create);
 router.get("/api/users");
 
 export default router;

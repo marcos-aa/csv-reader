@@ -4,21 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "ts-node-dev --transpile-only ./src/app.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/multer": "^1.4.11",
     "@types/node": "^20.12.13",
+    "prisma": "^5.14.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   },
   "dependencies": {
     "@fast-csv/parse": "^5.0.0",
+    "@prisma/client": "5.14.0",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "joi": "^17.13.1",
+    "multer": "^1.4.5-lts.1",
     "node-csv": "^0.1.2"
   }
 }
