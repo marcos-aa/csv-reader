@@ -10,7 +10,11 @@ export default function UploadLabel({
   filename,
 }: UploadLabel) {
   return (
-    <label htmlFor="file-input" className="upload-label">
+    <label
+      htmlFor="file-input"
+      className="upload-label"
+      data-testid="upload-button"
+    >
       <input
         name="file-input"
         id="file-input"

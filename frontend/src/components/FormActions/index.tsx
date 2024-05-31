@@ -23,6 +23,7 @@ export default function FormActions({
       onSubmit={handleFileSubmit}
     >
       <button
+        data-testid="remove-file"
         className="file-action"
         type="button"
         id="eject-file"
@@ -33,6 +34,7 @@ export default function FormActions({
       </button>
 
       <button
+        data-testid="upload-file"
         disabled={loading}
         className="file-action"
         type="submit"

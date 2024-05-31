@@ -1,8 +1,26 @@
+import coverage from "@cypress/code-coverage/task";
+import { exec } from "child_process";
 import { defineConfig } from "cypress";
-
+import { promisify } from "node:util";
 export default defineConfig({
   chromeWebSecurity: false,
   e2e: {
+    setupNodeEvents(on, config) {
+      coverage(on, config);
+      on("before:run", () => {
+        exec("npx prisma migrate dev -n create-database", {
+          cwd: "../backend",
+        });
+      }),
+        on("after:run", async () => {
+          const promisified = promisify(exec);
+          await promisified("npx ts-node ./prisma/teardown-users.ts", {
+            cwd: "../backend",
+          });
+        });
+
+      return config;
+    },
     baseUrl: "http://localhost:4000",
     experimentalInteractiveRunEvents: true,
     testIsolation: false,
