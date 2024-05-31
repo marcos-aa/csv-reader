@@ -19,6 +19,10 @@ main {
   width: 100%;
 }
 
+#actionables > * {
+  flex-shrink: 1;
+}
+
 #actionables .upload-label,
 input,
 button {
@@ -33,93 +37,6 @@ input[name="search"] {
   margin-right: auto;
 }
 
-#actionables input,
-#file-actions,
-.upload-label {
-  flex-shrink: 1;
-}
-
-#actionables .upload-label {
-  display: block;
-  text-align: center;
-  background-color: white;
-}
-
-#actionables .upload-label:hover {
-  cursor: pointer;
-}
-
-#actionables input[type="file"] {
-  width: 0;
-  height: 0;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
-}
-
-#file-actions {
-  display: flex;
-  width: 0;
-  transition: width 0.5s;
-  gap: 5px;
-  margin-right: -5px;
-}
-
-#file-actions .file-action {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 0px;
-  height: 0px;
-  background-color: #0c6df7;
-  border: none;
-  opacity: 1;
-  visibility: hidden;
-}
-
-#file-actions .file-action:disabled {
-  opacity: 0.5;
-}
-
-#file-actions.shared-wd {
-  width: 80px;
-}
-
-#file-actions.shared-wd .file-action {
-  width: 40px;
-  height: 30px;
-  visibility: visible;
-}
-
-#file-actions #eject-file {
-  background-color: red;
-}
-#file-actions svg {
-  height: 100%;
-}
-
-#file-actions svg path {
-  fill: white;
-}
-
-#error {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  right: 0;
-  margin: 0 5px;
-  color: red;
-  border: 1px solid #ea6868;
-  background-color: #ffdadb;
-  border-radius: 3px;
-  padding: 5px;
-  max-width: 100%;
-}
-
-#error svg {
-  font-size: 1.2rem;
-}
 #cards-holder {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -155,32 +72,6 @@ input[name="search"] {
   border-radius: 5px;
   gap: 5px;
   padding: 5px;
-}
-
-h1.info-item {
-  font-size: clamp(1vw, 10vw, 1.5em);
-}
-
-p.info-item {
-  font-size: clamp(1vw, 10vw, 1em);
-}
-
-.info-item svg {
-  width: 16px;
-  height: 16px;
-}
-.info-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 5px;
-  width: 200px;
-  word-wrap: break-word;
-  max-width: 100%;
-}
-
-.info-item:first-child {
-  border-bottom: 1px solid;
 }
 
 @media (max-width: 300px) {

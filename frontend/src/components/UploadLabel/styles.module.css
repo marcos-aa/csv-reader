@@ -1,0 +1,27 @@
+.upload-label,
+input,
+button {
+  max-width: 100%;
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid;
+}
+
+.upload-label {
+  display: block;
+  text-align: center;
+  background-color: white;
+}
+
+.upload-label:hover {
+  cursor: pointer;
+}
+
+.upload-label input[type="file"] {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}

@@ -1,14 +1,10 @@
-import {
-  faBasketball,
-  faUpload,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
-import { faHome } from "@fortawesome/free-solid-svg-icons/faHome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CSVRow } from "@shared/types";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./App.css";
+import ErrorPopup from "./components/ErrorPopup";
+import FormActions from "./components/FormActions";
+import InfoCard from "./components/InfoCard";
+import UploadLabel from "./components/UploadLabel";
 
 const baseURL = "http://localhost:3000";
 
@@ -88,49 +84,20 @@ function App() {
           placeholder="Search"
           onChange={handleSearch}
         />
-        <label className="upload-label">
-          <input
-            key={file?.name}
-            type="file"
-            accept="text/csv"
-            onChange={handleFileChange}
-          />
-          Upload
-        </label>
 
-        <form
-          id="file-actions"
-          className={file ? "shared-wd" : ""}
-          onSubmit={handleFileSubmit}
-        >
-          <button
-            className="file-action"
-            type="button"
-            id="eject-file"
-            title="Remove CSV file"
-            onClick={handleFileRemoval}
-          >
-            <FontAwesomeIcon icon={faXmark} />
-          </button>
+        <UploadLabel
+          filename={file?.name}
+          handleFileChange={handleFileChange}
+        />
 
-          <button
-            disabled={loading}
-            className="file-action"
-            type="submit"
-            title={`Submit${loading ? "ting" : ""} CSV file`}
-          >
-            <FontAwesomeIcon icon={faUpload} />
-          </button>
-        </form>
+        <FormActions
+          handleFileSubmit={handleFileSubmit}
+          handleFileRemoval={handleFileRemoval}
+          loading={loading}
+          visible={Boolean(file)}
+        />
 
-        {error && (
-          <div id="error">
-            <p>{error}</p>
-            <button type="button" title="Remove error warning">
-              <FontAwesomeIcon icon={faXmark} onClick={closeWarning} />
-            </button>
-          </div>
-        )}
+        {error && <ErrorPopup close={closeWarning} message={error} />}
       </div>
 
       <section id="cards-holder">
@@ -141,22 +108,13 @@ function App() {
         )}
 
         {users.map((user) => (
-          <div className="info-card" data-testid="info-card" key={user.id}>
-            <div className="info-item">
-              <FontAwesomeIcon icon={faUser} />
-              <h1 className="info-item">{user.name}</h1>
-            </div>
-            <div className="info-item">
-              <FontAwesomeIcon icon={faHome} />
-              <p className="info-item">
-                {user.city}, {user.country}
-              </p>
-            </div>
-            <div className="info-item">
-              <FontAwesomeIcon icon={faBasketball} />
-              <p className="info-item"> {user.favorite_sport} </p>
-            </div>
-          </div>
+          <InfoCard
+            name={user.name}
+            city={user.city}
+            country={user.country}
+            favorite_sport={user.favorite_sport}
+            key={user.id}
+          />
         ))}
       </section>
     </main>
