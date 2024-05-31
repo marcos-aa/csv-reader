@@ -9,29 +9,55 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormEvent, useState } from "react";
 import "./App.css";
 function App() {
-  const [file, setFile] = useState<File | null>();
+  const [file, setFile] = useState<File | null>(null);
 
   const handleFileChange = (e: FormEvent<HTMLInputElement>) => {
-    const file = e.currentTarget.files?.item(0);
-    setFile((prev) => file ?? prev);
+    const newfile = e.currentTarget.files?.item(0);
+    setFile(() => newfile ?? null);
   };
 
+  const handleFileRemoval = () => setFile(null);
+
+  const handleFileSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    await fetch("http://localhost:3000/api/files", {
+      method: "POST",
+      body: formData,
+      mode: "no-cors",
+    });
+  };
   return (
     <main>
       <div id="actionables">
         <input name="search" type="text" value={""} placeholder="Search" />
-        <label>
+        <label className="upload-label">
           <input type="file" accept="text/csv" onChange={handleFileChange} />
           Upload
         </label>
-        <div id="file-actions" className={file ? "shared-wd" : "full-wd"}>
-          <button type="button" title="Remove CSV file" id="eject-file">
+
+        <form
+          id="file-actions"
+          className={file ? "shared-wd" : "full-wd"}
+          onSubmit={handleFileSubmit}
+        >
+          <button
+            className="file-action"
+            type="button"
+            id="eject-file"
+            title="Remove CSV file"
+            onClick={handleFileRemoval}
+          >
             <FontAwesomeIcon icon={faXmark} />
           </button>
-          <button type="submit" title="Submit CSV file">
+
+          <button className="file-action" type="submit" title="Submit CSV file">
             <FontAwesomeIcon icon={faUpload} />
           </button>
-        </div>
+        </form>
       </div>
 
       <section id="cards-holder">
