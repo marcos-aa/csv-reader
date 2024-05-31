@@ -18,9 +18,10 @@ interface User extends CSVRow {
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
-  const [search, setSearch] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
+  const [search, setSearch] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleFileChange = (e: FormEvent<HTMLInputElement>) => {
     const newfile = e.currentTarget.files?.item(0) as File;
@@ -34,14 +35,20 @@ function App() {
   const handleFileSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) return;
+
     const formData = new FormData();
     formData.append("file", file);
+    setLoading(true);
     const res = await fetch(baseURL + "/api/files", {
       method: "POST",
       body: formData,
     });
-
+    setLoading(false);
     if (!res.ok) handleError(res);
+  };
+
+  const handleSearch = async (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
   };
 
   const handleError = async (res: Response) => {
@@ -49,13 +56,13 @@ function App() {
     setError(data.message);
   };
 
-  const handleSearch = async (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
-
   const getUsers = async (search: string) => {
+    setLoading(true);
     const res = await fetch(`${baseURL}/api/users?q=${search}`);
+    setLoading(false);
+
     if (!res.ok) return handleError(res);
+
     const data: User[] = (await res.json()).data;
     return setUsers(data);
   };
@@ -105,7 +112,12 @@ function App() {
             <FontAwesomeIcon icon={faXmark} />
           </button>
 
-          <button className="file-action" type="submit" title="Submit CSV file">
+          <button
+            disabled={loading}
+            className="file-action"
+            type="submit"
+            title={`Submit${loading ? "ting" : ""} CSV file`}
+          >
             <FontAwesomeIcon icon={faUpload} />
           </button>
         </form>
@@ -121,6 +133,12 @@ function App() {
       </div>
 
       <section id="cards-holder">
+        {users.length < 1 && (
+          <div id="search-cta">
+            <h1>No user found. Upload a new file or update your search!</h1>
+          </div>
+        )}
+
         {users.map((user) => (
           <div className="info-card" data-testid="info-card" key={user.id}>
             <div className="info-item">

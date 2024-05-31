@@ -13,8 +13,13 @@ button {
   border: none;
   background-color: transparent;
 }
+
 button:hover {
   cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 #root {
   display: flex;
