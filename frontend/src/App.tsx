@@ -20,6 +20,7 @@ function App() {
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string>("");
 
   const handleFileChange = (e: FormEvent<HTMLInputElement>) => {
     const newfile = e.currentTarget.files?.item(0);
@@ -31,14 +32,19 @@ function App() {
   const handleFileSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) return;
-
     const formData = new FormData();
     formData.append("file", file);
-    await fetch(baseURL + "/api/files", {
+    const res = await fetch(baseURL + "/api/files", {
       method: "POST",
       body: formData,
-      mode: "no-cors",
     });
+
+    if (!res.ok) handleError(res);
+  };
+
+  const handleError = async (res: Response) => {
+    const data = await res.json();
+    setError(data.message);
   };
 
   const handleSearch = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,8 +53,9 @@ function App() {
 
   const getUsers = async (search: string) => {
     const res = await fetch(`${baseURL}/api/users?q=${search}`);
+    if (!res.ok) return handleError(res);
     const data: User[] = (await res.json()).data;
-    setUsers(data);
+    return setUsers(data);
   };
 
   useEffect(() => {
@@ -96,12 +103,14 @@ function App() {
           </button>
         </form>
 
-        <div id="error">
-          <p> </p>
-          <button type="button" title="Remove error warning">
-            <FontAwesomeIcon icon={faXmark} />
-          </button>
-        </div>
+        {error && (
+          <div id="error">
+            <p>{error}</p>
+            <button type="button" title="Remove error warning">
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
+          </div>
+        )}
       </div>
 
       <section id="cards-holder">
