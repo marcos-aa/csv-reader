@@ -95,6 +95,13 @@ function App() {
             <FontAwesomeIcon icon={faUpload} />
           </button>
         </form>
+
+        <div id="error">
+          <p> </p>
+          <button type="button" title="Remove error warning">
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
+        </div>
       </div>
 
       <section id="cards-holder">
@@ -107,8 +114,7 @@ function App() {
             <div className="info-item">
               <FontAwesomeIcon icon={faHome} />
               <p className="info-item">
-                {" "}
-                {user.city}, {user.country}{" "}
+                {user.city}, {user.country}
               </p>
             </div>
             <div className="info-item">

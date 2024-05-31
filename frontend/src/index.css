@@ -8,6 +8,11 @@
   list-style: none;
 }
 
+button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
 button:hover {
   cursor: pointer;
 }
