@@ -41,6 +41,7 @@ function App() {
     });
     setLoading(false);
     if (!res.ok) handleError(res);
+    handleFileRemoval();
   };
 
   const handleSearch = async (e: ChangeEvent<HTMLInputElement>) => {
