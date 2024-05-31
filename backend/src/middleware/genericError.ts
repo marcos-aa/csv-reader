@@ -26,6 +26,8 @@ export default function genericError(
     return res.status(status).json({
       message: e.message,
     });
+
+  // Should redirect unexpected errors to a logging platform or file within server
   return res.status(500).json({
     message: "Something went wrong",
   });
