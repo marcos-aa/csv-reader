@@ -56,10 +56,11 @@ function App() {
     setError(data.message);
   };
 
+  const closeWarning = () => setError("");
+
   const getUsers = async (search: string) => {
     setLoading(true);
     const res = await fetch(`${baseURL}/api/users?q=${search}`);
-    setLoading(false);
 
     if (!res.ok) return handleError(res);
 
@@ -126,7 +127,7 @@ function App() {
           <div id="error">
             <p>{error}</p>
             <button type="button" title="Remove error warning">
-              <FontAwesomeIcon icon={faXmark} />
+              <FontAwesomeIcon icon={faXmark} onClick={closeWarning} />
             </button>
           </div>
         )}
