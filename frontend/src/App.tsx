@@ -8,12 +8,16 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CSVRow } from "@shared/types";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-
 import "./App.css";
 
 const baseURL = "http://localhost:3000";
+
+interface User extends CSVRow {
+  id: number;
+}
+
 function App() {
-  const [, setUsers] = useState<CSVRow[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
 
@@ -43,12 +47,12 @@ function App() {
 
   const getUsers = async (search: string) => {
     const res = await fetch(`${baseURL}/api/users?q=${search}`);
-    const data: CSVRow[] = (await res.json()).data;
+    const data: User[] = (await res.json()).data;
     setUsers(data);
   };
 
   useEffect(() => {
-    if (search.length < 1) return;
+    if (search.length < 1) return setUsers([]);
 
     const timeoutID = setTimeout(() => {
       getUsers(search);
@@ -94,28 +98,25 @@ function App() {
       </div>
 
       <section id="cards-holder">
-        <div className="info-card" data-testid="info-card">
-          <div className="info-item">
-            <FontAwesomeIcon icon={faUser} />
-            <h1 className="info-item">John Doe</h1>
+        {users.map((user) => (
+          <div className="info-card" data-testid="info-card" key={user.id}>
+            <div className="info-item">
+              <FontAwesomeIcon icon={faUser} />
+              <h1 className="info-item">{user.name}</h1>
+            </div>
+            <div className="info-item">
+              <FontAwesomeIcon icon={faHome} />
+              <p className="info-item">
+                {" "}
+                {user.city}, {user.country}{" "}
+              </p>
+            </div>
+            <div className="info-item">
+              <FontAwesomeIcon icon={faBasketball} />
+              <p className="info-item"> {user.favorite_sport} </p>
+            </div>
           </div>
-          <div className="info-item">
-            <FontAwesomeIcon icon={faHome} />
-            <p className="info-item"> New York, USA </p>
-          </div>
-          <div className="info-item">
-            <FontAwesomeIcon icon={faBasketball} />
-            <p className="info-item"> Baseball </p>
-          </div>
-        </div>
-
-        <div className="info-card" data-testid="info-card"></div>
-        <div className="info-card" data-testid="info-card"></div>
-        <div className="info-card" data-testid="info-card"></div>
-        <div className="info-card" data-testid="info-card"></div>
-        <div className="info-card" data-testid="info-card"></div>
-        <div className="info-card" data-testid="info-card"></div>
-        <div className="info-card" data-testid="info-card"></div>
+        ))}
       </section>
     </main>
   );
