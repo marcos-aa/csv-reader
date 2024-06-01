@@ -2,6 +2,7 @@ import { expect } from "@jest/globals";
 import { Server } from "http";
 import path from "path";
 import supertest from "supertest";
+import client from "../../prisma/client";
 import app from "../../src/app";
 
 describe("REST endpoints", () => {
@@ -14,6 +15,7 @@ describe("REST endpoints", () => {
 
   afterAll(() => {
     server.close();
+    return client.user.deleteMany({});
   });
 
   describe("POST /api/files", () => {

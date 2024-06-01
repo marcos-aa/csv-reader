@@ -4,7 +4,9 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
+    "build": "tsc",
     "dev": "DATABASE_URL=file:./dev.db npx prisma migrate dev -n create-dev && DATABASE_URL=file:./dev.db ts-node-dev --transpile-only ./src/server.ts",
+    "dev:test": "DATABASE_URL=file:./test.db npx prisma migrate dev -n create-dev && DATABASE_URL=file:./test.db ts-node-dev --transpile-only ./src/server.ts",
     "test": "DATABASE_URL=file:./test.db npx prisma migrate dev -n create-test-db && DATABASE_URL=file:./test.db jest --testPathPattern=__tests__/e2e --collect-coverage"
   },
   "keywords": [],

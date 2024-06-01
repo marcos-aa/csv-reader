@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "test": "cypress run && nyc report --reporter=text-summary && nyc report --reporter=html",
+    "test": "concurrently --kill-others --success last 'cd ../backend && npm run dev:test' 'npm run dev' 'cypress run && nyc report --reporter=text-summary'",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -25,6 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
     "cypress": "^13.10.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
