@@ -5,7 +5,10 @@ import FormActions from "./components/FormActions";
 import InfoCard, { User } from "./components/InfoCard";
 import UploadLabel from "./components/UploadLabel";
 
-const baseURL = "http://localhost:3000";
+const baseURL =
+  import.meta.env.MODE === "production"
+    ? "https://csv-reader-64rx.onrender.com"
+    : "http://localhost:3000";
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);

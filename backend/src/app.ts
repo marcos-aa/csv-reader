@@ -6,7 +6,7 @@ import router from "./router";
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:4000",
+    origin: process.env.DOMAIN || "http://localhost:4000",
   })
 );
 
