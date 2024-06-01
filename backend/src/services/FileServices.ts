@@ -1,4 +1,4 @@
-import { parse } from "@fast-csv/parse";
+import { parseStream } from "@fast-csv/parse";
 import { User } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { createReadStream, unlinkSync } from "fs";
@@ -14,24 +14,36 @@ export default class FileServices {
       quote: null,
     };
 
-    const stream = createReadStream(file.path).pipe(parse(parseConfig));
+    const readable = createReadStream(file.path);
+    const stream = parseStream(readable, parseConfig);
+
     return await new Promise<string>((resolve, reject) => {
-      stream.on("data", (row: User) => data.push(row));
+      stream.on("data", (row: User) => {
+        data.push(row);
+      });
+
+      stream.on("error", (e) => {
+        unlinkSync(file.path);
+        reject(e.message);
+      });
+
       stream.on("end", async () => {
         try {
           await client.user.createMany({ data });
           resolve("The file was uploaded successfully");
         } catch (e) {
           const code = (e as PrismaClientKnownRequestError).code;
-          if (code == "P2002") {
-            reject(new ErrorStatus("Duplicate user present in list", 403));
-          }
-          reject(e);
-        }
+          let message: string = (e as PrismaClientKnownRequestError).message,
+            status: number = 500;
 
+          if (code == "P2002") {
+            message = "Duplicate user present in list";
+            status = 403;
+          }
+          reject(new ErrorStatus(message, status));
+        }
         unlinkSync(file.path);
       });
-      stream.on("error", (error) => reject(error.message));
     });
   }
 }

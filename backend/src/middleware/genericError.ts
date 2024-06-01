@@ -11,23 +11,23 @@ export class ErrorStatus extends Error {
 }
 
 export default function genericError(
-  e: ErrorStatus,
+  e: Error,
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   const status = (e as ErrorStatus).status;
-  if (e instanceof MulterError)
-    return res.status(422).json({
-      message: e.message,
-    });
-
   if (status)
     return res.status(status).json({
       message: e.message,
     });
 
-  // Should redirect unexpected errors to a logging platform or file within server
+  if (e instanceof MulterError) {
+    return res.status(422).json({
+      message: "Invalid file",
+    });
+  }
+
   return res.status(500).json({
     message: "Something went wrong",
   });

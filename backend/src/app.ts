@@ -13,6 +13,5 @@ app.use(
 app.use(router);
 app.use(express.json());
 app.use(genericError);
-app.listen(3000);
 
 export default app;
