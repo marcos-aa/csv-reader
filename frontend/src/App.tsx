@@ -1,16 +1,11 @@
-import { CSVRow } from "@shared/types";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./App.css";
 import ErrorPopup from "./components/ErrorPopup";
 import FormActions from "./components/FormActions";
-import InfoCard from "./components/InfoCard";
+import InfoCard, { User } from "./components/InfoCard";
 import UploadLabel from "./components/UploadLabel";
 
 const baseURL = "http://localhost:3000";
-
-interface User extends CSVRow {
-  id: number;
-}
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
@@ -115,7 +110,7 @@ function App() {
             city={user.city}
             country={user.country}
             favorite_sport={user.favorite_sport}
-            key={user.id}
+            key={user.name}
           />
         ))}
       </section>

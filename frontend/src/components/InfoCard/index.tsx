@@ -4,15 +4,21 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { CSVRow } from "@shared/types";
 import "./styles.css";
+
+export interface User {
+  name: string;
+  country: string;
+  city: string;
+  favorite_sport: string;
+}
 
 export default function InfoCard({
   name,
   city,
   country,
   favorite_sport,
-}: CSVRow) {
+}: User) {
   return (
     <div className="info-card" data-testid="info-card">
       <div className="info-item">
