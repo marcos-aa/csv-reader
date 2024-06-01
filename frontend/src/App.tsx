@@ -54,7 +54,6 @@ function App() {
   const closeWarning = () => setError("");
 
   const getUsers = async (search: string) => {
-    setLoading(true);
     const res = await fetch(`${baseURL}/api/users?q=${search}`);
 
     if (!res.ok) return handleError(res);
