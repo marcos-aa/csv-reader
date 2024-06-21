@@ -7,7 +7,7 @@ import UploadLabel from "./components/UploadLabel";
 
 const baseURL =
   import.meta.env.MODE === "production"
-    ? "https://csv-reader-64rx.onrender.com"
+    ? "https://csviewer.vercel.app"
     : "http://localhost:3000";
 
 function App() {
@@ -33,7 +33,7 @@ function App() {
     const formData = new FormData();
     formData.append("file", file);
     setLoading(true);
-    const res = await fetch(baseURL + "/api/files", {
+    const res = await fetch(baseURL + "/files", {
       method: "POST",
       body: formData,
     });
@@ -54,7 +54,7 @@ function App() {
   const closeWarning = () => setError("");
 
   const getUsers = async (search: string) => {
-    const res = await fetch(`${baseURL}/api/users?q=${search}`);
+    const res = await fetch(`${baseURL}/users?q=${search}`);
 
     if (!res.ok) return handleError(res);
 
