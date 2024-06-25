@@ -7,7 +7,7 @@ import UploadLabel from "./components/UploadLabel";
 
 const baseURL =
   import.meta.env.MODE === "production"
-    ? "https://csviewer.vercel.app"
+    ? "https://csv-reader-server.vercel.app"
     : "http://localhost:3000";
 
 function App() {
