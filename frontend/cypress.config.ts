@@ -10,12 +10,9 @@ export default defineConfig({
       coverage(on, config);
       on("after:run", async () => {
         const promisified = promisify(exec);
-        await promisified(
-          "DATABASE_URL=file:./test.db npx ts-node ./prisma/teardown-users.ts",
-          {
-            cwd: "../backend",
-          }
-        );
+        await promisified("npx ts-node ./__tests__/teardown-users.ts", {
+          cwd: "../backend",
+        });
       });
 
       return config;

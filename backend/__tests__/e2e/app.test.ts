@@ -2,8 +2,8 @@ import { expect } from "@jest/globals";
 import { Server } from "http";
 import path from "path";
 import supertest from "supertest";
+import app from "../../api";
 import client from "../../prisma/client";
-import app from "../../src/app";
 
 describe("REST endpoints", () => {
   const request = supertest(app);

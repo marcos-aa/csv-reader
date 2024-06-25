@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "test": "concurrently --kill-others --success last 'cd ../backend && npm run dev:test' 'npm run dev' 'cypress run && nyc report --reporter=text-summary'",
+    "test:web": "concurrently -k -s first 'npm run dev' 'cypress open --e2e --browser electron'",
+    "test": "concurrently -k -s last 'npm run dev' 'cypress run && nyc report --reporter=text-summary'",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

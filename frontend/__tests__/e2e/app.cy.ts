@@ -12,7 +12,9 @@ describe("Application dashboard", () => {
     });
 
     it("And I click the 'confirm upload' button", () => {
+      cy.intercept("POST", "/api/files").as("upload");
       getCyElement("upload-file").click();
+      cy.wait("@upload");
     });
 
     it("And I search for 'John' in the search field", () => {

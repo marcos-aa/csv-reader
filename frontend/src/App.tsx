@@ -33,7 +33,7 @@ function App() {
     const formData = new FormData();
     formData.append("file", file);
     setLoading(true);
-    const res = await fetch(baseURL + "/files", {
+    const res = await fetch(baseURL + "/api/files", {
       method: "POST",
       body: formData,
     });
@@ -54,7 +54,7 @@ function App() {
   const closeWarning = () => setError("");
 
   const getUsers = async (search: string) => {
-    const res = await fetch(`${baseURL}/users?q=${search}`);
+    const res = await fetch(`${baseURL}/api/users?q=${search}`);
 
     if (!res.ok) return handleError(res);
 
