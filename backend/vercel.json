@@ -1,3 +1,4 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/dist/src/server" }]
+  "version": 2,
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
 }

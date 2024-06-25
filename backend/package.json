@@ -2,13 +2,15 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.js",
+  "main": "./api/index.js",
   "scripts": {
-    "build": "tsc && npx prisma migrate dev -n create-db",
-    "start": "node ./dist/src/server.js",
-    "dev": "DATABASE_URL=file:./dev.db npx prisma migrate dev -n create-dev && DATABASE_URL=file:./dev.db ts-node-dev --transpile-only ./src/server.ts",
-    "dev:test": "DATABASE_URL=file:./test.db npx prisma migrate dev -n create-dev && DATABASE_URL=file:./test.db ts-node-dev --transpile-only ./src/server.ts",
-    "test": "DATABASE_URL=file:./test.db npx prisma migrate dev -n create-test-db && DATABASE_URL=file:./test.db jest --testPathPattern=__tests__/e2e --collect-coverage"
+    "build": "tsc && npm run gen:db",
+    "start": "node ./api/index.js",
+    "gen:db": "prisma migrate dev -n create-db",
+    "gen:db-tests": "dotenv -e .env.test -- npm run gen:db",
+    "test": "jest --testPathPattern=__tests__/e2e --collect-coverage",
+    "dev": "ts-node-dev --transpile-only ./api/server.ts",
+    "dev:cypress": "dotenv -e .env.test -- npm run dev"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +22,7 @@
     "@types/multer": "^1.4.11",
     "@types/node": "^20.12.13",
     "@types/supertest": "^6.0.2",
+    "dotenv-cli": "^7.4.2",
     "jest": "^29.7.0",
     "prisma": "^5.14.0",
     "supertest": "^7.0.0",
@@ -31,11 +34,11 @@
   "dependencies": {
     "@fast-csv/parse": "^5.0.0",
     "@prisma/client": "5.14.0",
+    "@vercel/postgres": "^0.8.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "joi": "^17.13.1",
     "multer": "^1.4.5-lts.1",
-    "node-csv": "^0.1.2",
     "zod": "^3.23.8"
   }
 }
