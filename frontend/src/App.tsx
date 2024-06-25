@@ -7,7 +7,7 @@ import UploadLabel from "./components/UploadLabel";
 
 const baseURL =
   import.meta.env.MODE === "production"
-    ? "https://king-prawn-app-5cptd.ondigitalocean.app"
+    ? "https://csviewer.vercel.app"
     : "http://localhost:3000";
 
 function App() {
