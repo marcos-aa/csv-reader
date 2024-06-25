@@ -4,7 +4,7 @@
   "description": "",
   "main": "./api/index.js",
   "scripts": {
-    "build": "tsc && npm run gen:db",
+    "build": "tsc && npx prisma db push",
     "start": "node ./api/index.js",
     "gen:db": "prisma migrate dev -n create-db",
     "gen:db-tests": "dotenv -e .env.test -- npm run gen:db",
