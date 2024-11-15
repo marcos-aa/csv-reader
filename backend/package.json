@@ -2,12 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "./api/index.js",
+  "main": "./dist/api/server.js",
   "scripts": {
-    "build": "tsc && npx prisma db push",
-    "start": "node ./api/index.js",
-    "gen:db": "prisma migrate dev -n create-db",
-    "gen:db-tests": "dotenv -e .env.test -- npm run gen:db",
+    "start": "node ./dist/api/server.js",
+    "build": "tsc",
+    "generate": "prisma generate && prisma db push",
     "test": "jest --testPathPattern=__tests__/e2e --collect-coverage",
     "dev": "ts-node-dev --transpile-only ./api/server.ts",
     "dev:cypress": "dotenv -e .env.test -- npm run dev"
@@ -16,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.9",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
