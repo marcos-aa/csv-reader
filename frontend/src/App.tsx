@@ -53,17 +53,17 @@ function App() {
 
   const closeWarning = () => setError("");
 
-  const getUsers = async (search: string) => {
-    const res = await fetch(`${baseURL}/api/users?q=${search}`);
-
-    if (!res.ok) return handleError(res);
-
-    const data: User[] = (await res.json()).data;
-    return setUsers(data);
-  };
-
   useEffect(() => {
     if (search.length < 1) return setUsers([]);
+
+    const getUsers = async (search: string) => {
+      const res = await fetch(`${baseURL}/api/users?q=${search}`);
+
+      if (!res.ok) return handleError(res);
+
+      const data: User[] = (await res.json()).data;
+      return setUsers(data);
+    };
 
     const timeoutID = setTimeout(() => {
       getUsers(search);
